@@ -9,6 +9,7 @@ import sys
 import os
 import logging
 import click
+import math
 
 import faiss
 import numpy as np
@@ -29,10 +30,33 @@ def build_index(predictions, dimension=4096):
     faiss.normalize_L2(predictions)
 
     # Default exact search, see:
+    # https://github.com/facebookresearch/faiss/wiki/Faiss-indexes
+    # and
     # https://github.com/facebookresearch/faiss/wiki/Faster-search
-    # for more practical indexes.
-    # Depends on the data size and memory available.
-    index = faiss.IndexFlatL2(dimension)
+    # Note, it doesn't matter if we use inner product or L2 here
+    # index = faiss.IndexFlatIP(dimension)
+
+    # Product quantization index
+    # for 40k coco images the index size is 4.7M vs 644M with the Flat index
+    # number of subquantizers
+    #
+    # m = 16
+    # # bits allocated per subquantizer
+    # n_bits = 8
+    # index = faiss.IndexPQ(dimension, m, n_bits)
+
+    # # 44 seconds for 40k coco dataset and 6 cpu cores
+    # index.train(predictions)
+
+    
+    # Inverted file with PQ refinement
+    # 47 sec training, 7.6M index size
+    nlist = 100
+    code_size = 8
+    nc = int(math.sqrt(predictions.shape[0]))
+    quantizer = faiss.IndexFlatIP(dimension)
+    index = faiss.IndexIVFPQ(quantizer, dimension, nc, code_size, 8)
+    index.train(predictions)
 
     index.add(predictions)
     return index
@@ -63,7 +87,7 @@ def main (verbose, input_vectors, output_filename):
     )
     logging.info ("Starting: '%s'" % __file__)
 
-    # Check we can write the output before the expensive computing
+    # Check we can write the output before doing the expensive computing
     try:
         with open(output_filename, 'r'):
             logging.error(

@@ -152,7 +152,7 @@ def main (verbose, model_filename, filename_list, img_dir, batch_size,
 
     if output_filename is None:
         output_filename = filename_list + '.saved_predictions.npy'
-    # Check we can write the output before the expensive computing
+    # Check we can write the output before doing the expensive computing
     try:
         with open(output_filename, 'r'):
             logging.error(

@@ -16,7 +16,7 @@ import numpy as np
 
 
 ##########################
-def build_index(predictions, dimension=4096):
+def build_index(predictions, dimension=1280):
     """
     Build a Faiss search index
 
@@ -50,12 +50,15 @@ def build_index(predictions, dimension=4096):
 
     
     # Inverted file with PQ refinement
-    # 47 sec training, 7.6M index size
+    # 57 sec training, 8M index size
     nlist = 100
-    code_size = 8
+    code_size = 16
+    n_bits = 8
     nc = int(math.sqrt(predictions.shape[0]))
     quantizer = faiss.IndexFlatIP(dimension)
-    index = faiss.IndexIVFPQ(quantizer, dimension, nc, code_size, 8)
+    index = faiss.IndexIVFPQ(quantizer, dimension, nc, code_size, n_bits)
+    index.nprobe = 4
+
     index.train(predictions)
 
     index.add(predictions)
@@ -76,8 +79,11 @@ context_settings=dict(help_option_names=['-h', '--help']))
                 help="Typicaly `xxx.saved_predictions.npy` file.")
 @click.option ("-o", "--output_filename", type=click.Path(), required=True,
                 help="Must not exist. Save the resulting Faiss index there.")
+@click.option ("-d", "--dimension", type=int, default=4096,
+                show_default=True,
+                help="Dimension of the feature vector, just for check.")
 
-def main (verbose, input_vectors, output_filename):
+def main (verbose, input_vectors, output_filename, dimension):
     logging_level = logging.INFO
     if verbose:
         logging_level = logging.DEBUG
@@ -104,17 +110,16 @@ def main (verbose, input_vectors, output_filename):
             "Output filename '%s' is not writeable." % output_filename)
         return 1
 
-    dim = 4096
     predictions = np.load(input_vectors)
-    if predictions.shape[1] != dim:
+    if predictions.shape[1] != dimension:
         logging.error(
             "Input vectors have unexpected size, expected %d, got %d" %
-            (dim, predictions.shape[1])
+            (dimension, predictions.shape[1])
         )
         return 1
 
     logging.info("Building index...")
-    index = build_index(predictions, dimension = dim)
+    index = build_index(predictions, dimension=dimension)
 
     logging.info("Writing index to '%s'" % output_filename)
     faiss.write_index(index, output_filename)

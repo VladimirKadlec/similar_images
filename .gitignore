@@ -1,10 +1,11 @@
 .*.swp
 tmp/
 ms_coco/
+precomputed/
 __pycache__/
 .ipynb_checkpoints/
 data_zal/
-faiss*
 ms_coco_file_list*
-*.saved_predictions.npy
-vgg_4096.h5
+*.npy
+*.h5
+*.index

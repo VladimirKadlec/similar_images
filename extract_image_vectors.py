@@ -3,7 +3,7 @@
 #
 # Author: Vladimír Kadlec, vladimirkadlec@gmail.com
 #
-# Extract 4096 vector from the input list of images.
+# Extract feature vector from the input list of images.
 # VGG16 model pre-trained on ImageNet is used.
 
 import sys
@@ -30,9 +30,14 @@ tf.config.threading.set_intra_op_parallelism_threads(
 tf.config.set_soft_device_placement(True)
 #######
 
+#from tensorflow.keras.applications.efficientnet import EfficientNetB0
+#from tensorflow.keras.applications.efficientnet import preprocess_input
+
 from tensorflow.keras.applications.vgg16 import VGG16
-from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.vgg16 import preprocess_input
+
+from tensorflow.keras.preprocessing import image
+
 from keras import models, Model
 import tensorflow.keras.models
 import numpy as np
@@ -55,6 +60,8 @@ def init_model(model_filename='vgg_4096.h5'):
         model = tensorflow.keras.models.load_model(
             model_filename, compile=False)
     except OSError:
+        #effnet = EfficientNetB0(weights='imagenet', include_top=True)
+        #model = Model(effnet.input, effnet.layers[-3].output)
         vgg = VGG16(weights='imagenet', include_top=True)
         model = Model(vgg.input, vgg.layers[-2].output)
         model.save(model_filename)
@@ -64,8 +71,8 @@ def init_model(model_filename='vgg_4096.h5'):
 def image_list_to_vectors(model, img_dir='ms_coco/val2014',
     file_list = '', batch_size = 32):
     """
-    Convert images from 'file_list' to 4096 vector by prediction
-    from the VGG16 'model'.
+    Convert images from 'file_list' to feature vector by prediction
+    from the EfficientNetB0 'model'.
 
     Args:
         model: Keras Model for predictions.
@@ -77,7 +84,8 @@ def image_list_to_vectors(model, img_dir='ms_coco/val2014',
         (filename_list, predictions)
         where:
             filename_list: list of filenames
-            predictions: numpy.ndarray, len(filename_list) x 4096
+            predictions: numpy.ndarray, len(filename_list) x dim
+                where dim is 4096 for VGG16 and 1280 for efficientnet
     """
 
     assert(batch_size > 0)
@@ -119,7 +127,7 @@ def image_list_to_vectors(model, img_dir='ms_coco/val2014',
 ##########################
 @click.command(help=
 """
-Extract 4096 vector from the input list of images. The images are read from
+Extract feature vector from the input list of images. The images are read from
 the `img_dir` directory. VGG16 model pre-trained on ImageNet is used.
 """
 , no_args_is_help=True,

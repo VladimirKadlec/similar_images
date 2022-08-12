@@ -57,7 +57,7 @@ command **before** `jupyter notebook` launch.
 The following steps should work on `Ubuntu 22.04.1 LTS` Linux server:
 1. Clone this repo:
 ```
-$git clone 'https://github.com/VladimirKadlec/similar_images.git'
+$git clone 'git@github.com:VladimirKadlec/similar_images.git'
 ```
 
 2. Download MS COCO images (6.2G file):

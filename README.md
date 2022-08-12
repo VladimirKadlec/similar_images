@@ -54,19 +54,22 @@ jupyter nbextension enable --py --sys-prefix widgetsnbextension
 ```
 command **before** `jupyter notebook` launch.
 #### Steps
-The following steps should work on `Ubuntu 22.04.1 LTS` Linux server:
-1. Clone this repo:
+The following steps should work on `Ubuntu 22.04.1 LTS` Linux server.
+The whole installation requires cca 14G disk space.
+Don't forget to activate your virtual environment with installed packages.
+1. Clone this repo, enter the directory:
 ```
 $git clone 'git@github.com:VladimirKadlec/similar_images.git'
+$cd similar_images
 ```
 
-2. Download MS COCO images (6.2G file):
+2. Download and extract MS COCO images (6.2G file, 6.8G extracted size):
 ```
 $./get_ms_coco_dataset.sh
 ```
 
 3. Download **or** compute feature vectors for images:
-- download vectors from my DropBox (225M file):
+- download vectors from my DropBox (225M file, 633M extracted size):
 ```
 $./get_ms_coco_vectors.sh
 ```
@@ -81,7 +84,7 @@ The index is built under 50 seconds.
 $./build_search_db.py -i ms_coco_file_list.txt.saved_predictions.npy -o ms_coco_file_list.faiss.index
 ```
 
-5. Run Jupyter Notebook with file [Similar image.ipynb](Similar image.ipynb).
+5. Run Jupyter Notebook with file [Similar image.ipynb](Similar image.ipynb). You may need to click `Kernel/Restart & Run All` for the first time.
 
 ## Discussion
 1. How to evaluate the quality of the similar search?

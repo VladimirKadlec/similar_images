@@ -37,7 +37,7 @@ really a small number.
 The demo application is a Jupyter Notebook, see [Similar image.ipynb](Similar\ image.ipynb).
 
 ### Installation
-The develompent was done on `Ubuntu 22.04.1 LTS`, 4 CPU cores, 4G RAM server.
+The development was done on `Ubuntu 22.04.1 LTS`, 4 CPU cores, 4G RAM server, in python3.
 #### Requirements
 You usually use virtualenv + pip, conda or similar to install the following packages:
 ```
@@ -53,9 +53,10 @@ jupyter nbextension enable --py --sys-prefix widgetsnbextension
 ```
 command **before** `jupyter notebook` launch.
 #### Steps
+The following steps should work on `Ubuntu 22.04.1 LTS` Linux server:
 1. Clone this repo:
 ```
-$git clone
+$git clone 'https://github.com/VladimirKadlec/similar_images.git'
 ```
 
 2. Download MS COCO images (6.2G file):
@@ -64,7 +65,7 @@ $./get_ms_coco_dataset.sh
 ```
 
 3. Download **or** compute feature vectors for images:
-- download from my DropBox (225M file):
+- download vectors from my DropBox (225M file):
 ```
 $./get_ms_coco_vectors.sh
 ```
@@ -74,6 +75,7 @@ $./extract_image_vectors.py -l ms_coco_file_list.txt
 ```
 
 4. Build Faiss index:
+The index is built under 50 seconds.
 ```
 $./build_search_db.py -i ms_coco_file_list.txt.saved_predictions.npy -o ms_coco_file_list.faiss.index
 ```

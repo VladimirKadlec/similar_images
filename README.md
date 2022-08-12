@@ -34,7 +34,7 @@ purposes even brute force exact search would be fast enough, as 40k images is
 really a small number.
 
 ### Demo application
-The demo application is a Jupyter Notebook, see [Similar image.ipynb](Similar\ image.ipynb).
+The demo application is a Jupyter Notebook, see [Similar image.ipynb](Similar&#32;image.ipynb).
 
 ### Installation
 The development was done on `Ubuntu 22.04.1 LTS`, 4 CPU cores, 4G RAM server, in python3.
@@ -84,7 +84,7 @@ The index is built under 50 seconds.
 $./build_search_db.py -i ms_coco_file_list.txt.saved_predictions.npy -o ms_coco_file_list.faiss.index
 ```
 
-5. Run Jupyter Notebook with file [Similar image.ipynb](Similar image.ipynb). You may need to click `Kernel/Restart & Run All` for the first time.
+5. Run Jupyter Notebook with file [Similar image.ipynb](Similar&#32;image.ipynb). You may need to click `Kernel/Restart & Run All` for the first time.
 
 ## Discussion
 1. How to evaluate the quality of the similar search?

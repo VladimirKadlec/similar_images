@@ -46,6 +46,7 @@ tensorflow
 pillow
 notebook
 ipywidgets
+faiss-cpu
 ```
 **Note:** You have to enable `widgetsnbextension` before starting jupyter notebook. If you have virtual environment, use:
 ```

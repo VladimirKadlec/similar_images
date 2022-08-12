@@ -56,7 +56,7 @@ command **before** `jupyter notebook` launch.
 #### Steps
 The following steps should work on `Ubuntu 22.04.1 LTS` Linux server.
 The whole installation requires cca 14G disk space.
-Don't forget to activate your virtual environment with installed packages.
+Don't forget to **activate your virtual environment** with installed packages.
 1. Clone this repo, enter the directory:
 ```
 $git clone 'git@github.com:VladimirKadlec/similar_images.git'

@@ -11,7 +11,7 @@ The images from the COCO dataset "2014 Val images" are used to populate the imag
 
 The demo application is a Jupyter Notebook. You can search for random images from the database, or upload your own image as an input. The results are images from the database (i.e. these 40504 images from the COCO dataset).
 
-[Demo example](demo_example.gif)
+<img alt="Demo application" src="demo_example.gif" width="700">
 
 ## Technical description
 ### Image database

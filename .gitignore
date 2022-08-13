@@ -8,4 +8,4 @@ data_zal/
 ms_coco_file_list*
 *.npy
 *.h5
-*.index
+ms_coco_file_list.faiss.index

@@ -31,7 +31,7 @@ sub-quantizers with 8 bits, 100 centroids. The **resulting index** in just
 **8M bytes**.  Note, that the quantization requires training, we use the whole
 dataset as the training set, because our database is static.  For the demo
 purposes even brute force exact search would be fast enough, as 40k images is
-really a small number.
+really small number.
 
 ### Demo application
 The demo application is a Jupyter Notebook, see [Similar image.ipynb](Similar&#32;image.ipynb).

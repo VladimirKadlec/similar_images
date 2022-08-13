@@ -113,4 +113,4 @@ $./build_search_db.py -i ms_coco_file_list.txt.saved_predictions.npy -o ms_coco_
   rebuilding the whole index.
 
 6. What about the similarity of texts?
-- See proof of concept of proof of concept in [Text_similarity.ipynb](Text_similarity.ipynb)
+- See proof of concept of proof of concept in [Text_similarity.ipynb](Text_similarity.ipynb). The database is 20k tweets from Sentiment140 dataset, the index is pre-computed and stored in this repo.

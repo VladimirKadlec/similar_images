@@ -105,9 +105,12 @@ $./build_search_db.py -i ms_coco_file_list.txt.saved_predictions.npy -o ms_coco_
 - The vectors are quantized during indexing by the Faiss library to cca 16 x 8 bits.
 
 4. VGG16 vs EfficientNetB0:
-- The EfficientNetB0 is much faster and much smaller, the result from the
+- The EfficientNetB0 is much faster and much smaller, the results from the
   experiments weren't satisfactory.
 
 5. Is it possible to add new images to the index?
 - Yes, new images (feature vectors) can be added to the index without
   rebuilding the whole index.
+
+6. What about the similarity of texts?
+- See proof of concept of proof of concept in [Text_similarity.ipynb](Text_similarity.ipynb)
